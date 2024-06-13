@@ -30,25 +30,39 @@ class EmberQuestGame extends FlameGame {
   }
 
   void initializeGame() {
+    final segmentsToLoad = (size.x / 640).ceil();
+    segmentsToLoad.clamp(0, segments.length);
 
-    //TODo 仮
-    loadGameSegments(0);
+    for (int i = 0; i < segmentsToLoad; i++) {
+      loadGameSegments(i, (640 * i).toDouble());
+    }
 
     _emberPlayer = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 70),
+      position: Vector2(128, canvasSize.y - 96),
     );
     world.add(_emberPlayer);
   }
 
-  void loadGameSegments(int segmentIndex) {
+  void loadGameSegments(int segmentIndex, double xPositionOffset) {
     final blocks = segments[segmentIndex];
     for (int i = 0; i < blocks.length; i++) {
       final block = blocks[i];
       switch (block.blockType) {
         case GroundBlock:
+          add(
+            GroundBlock(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
           break;
         case PlatformBlock:
-          add(PlatformBlock(gridPosition: block.gridPosition));
+          add(
+            PlatformBlock(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
           break;
         case Star:
           break;

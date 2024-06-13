@@ -4,10 +4,12 @@ import 'package:flame/components.dart';
 class PlatformBlock extends SpriteComponent
     with HasGameReference<EmberQuestGame> {
   final Vector2 gridPosition;
+  final double xOffset;
 
-  //TODO
-  PlatformBlock({required this.gridPosition})
-      : super(
+  PlatformBlock({
+    required this.gridPosition,
+    required this.xOffset,
+  }) : super(
           size: Vector2.all(64),
           anchor: Anchor.bottomLeft,
         );
@@ -19,7 +21,7 @@ class PlatformBlock extends SpriteComponent
     sprite = Sprite(image);
 
     position = Vector2(
-      size.x * gridPosition.x,
+      xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
   }
