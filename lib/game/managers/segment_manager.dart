@@ -30,6 +30,9 @@ final segment0 = [
   Block(Vector2(5, 1), WaterEnemy),
   Block(Vector2(5, 3), PlatformBlock),
   Block(Vector2(6, 0), GroundBlock),
+
+  Block(Vector2(6, 1), Star),
+
   Block(Vector2(6, 3), PlatformBlock),
   Block(Vector2(7, 0), GroundBlock),
   Block(Vector2(7, 3), PlatformBlock),

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ember_quest/game/actors/ember.dart';
 import 'package:ember_quest/game/actors/water_enemy.dart';
 import 'package:ember_quest/game/managers/segment_manager.dart';
@@ -6,9 +8,15 @@ import 'package:ember_quest/game/objects/platform_block.dart';
 import 'package:ember_quest/game/objects/star.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
 
 class EmberQuestGame extends FlameGame {
   late EmberPlayer _emberPlayer;
+
+  @override
+  Color backgroundColor() {
+    return Color.fromARGB(255, 173, 223, 247);
+  }
 
   @override
   Future<void> onLoad() async {
@@ -65,8 +73,18 @@ class EmberQuestGame extends FlameGame {
           );
           break;
         case Star:
+          add(
+            Star(
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
+          );
           break;
         case WaterEnemy:
+          add(
+            WaterEnemy(
+                gridPosition: block.gridPosition, xOffset: xPositionOffset),
+          );
           break;
       }
     }
