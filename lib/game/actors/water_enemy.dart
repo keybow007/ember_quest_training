@@ -1,5 +1,6 @@
 import 'package:ember_quest/game/ember_quest_game.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 
 class WaterEnemy extends SpriteAnimationComponent
     with HasGameReference<EmberQuestGame> {
@@ -30,7 +31,16 @@ class WaterEnemy extends SpriteAnimationComponent
       xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
+
+    add(
+      MoveEffect.by(
+        Vector2(-2 * size.x, 0),
+        EffectController(
+          duration: 3.0,
+          infinite: true,
+          alternate: true,
+        ),
+      ),
+    );
   }
-
-
 }

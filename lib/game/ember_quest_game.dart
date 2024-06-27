@@ -7,10 +7,11 @@ import 'package:ember_quest/game/objects/ground_block.dart';
 import 'package:ember_quest/game/objects/platform_block.dart';
 import 'package:ember_quest/game/objects/star.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class EmberQuestGame extends FlameGame {
+class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents {
   late EmberPlayer _emberPlayer;
 
   @override
@@ -83,7 +84,9 @@ class EmberQuestGame extends FlameGame {
         case WaterEnemy:
           add(
             WaterEnemy(
-                gridPosition: block.gridPosition, xOffset: xPositionOffset),
+              gridPosition: block.gridPosition,
+              xOffset: xPositionOffset,
+            ),
           );
           break;
       }
