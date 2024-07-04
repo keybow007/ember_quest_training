@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents {
   late EmberPlayer _emberPlayer;
+  double objectSpeed = 0.0;
 
   @override
   Color backgroundColor() {

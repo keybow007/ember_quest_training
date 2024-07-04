@@ -29,6 +29,12 @@ class EmberPlayer extends SpriteAnimationComponent
     super.update(dt);
     velocity.x = horizontalDirection * moveSpeed;
     position += velocity * dt;
+
+    if (horizontalDirection < 0 && scale.x > 0) {
+      flipHorizontally();
+    } else if (horizontalDirection > 0 && scale.x < 0) {
+      flipHorizontally();
+    }
   }
 
   @override
@@ -36,12 +42,10 @@ class EmberPlayer extends SpriteAnimationComponent
     horizontalDirection = 0;
     if (keysPressed.contains(LogicalKeyboardKey.keyA) ||
         keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      //horizontalDirection = -1;
       horizontalDirection -= 1;
     }
     if (keysPressed.contains(LogicalKeyboardKey.keyD) ||
         keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      //horizontalDirection = 1;
       horizontalDirection += 1;
     }
     return true;

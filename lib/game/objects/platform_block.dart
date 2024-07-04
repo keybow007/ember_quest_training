@@ -6,6 +6,8 @@ class PlatformBlock extends SpriteComponent
   final Vector2 gridPosition;
   final double xOffset;
 
+  final Vector2 velocity = Vector2.zero();
+
   PlatformBlock({
     required this.gridPosition,
     required this.xOffset,
@@ -24,5 +26,13 @@ class PlatformBlock extends SpriteComponent
       xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    velocity.x = game.objectSpeed;
+    position += velocity * dt;
+    //position = position + velocity * dt;
   }
 }
