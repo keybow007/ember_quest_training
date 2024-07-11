@@ -32,6 +32,7 @@ class PlatformBlock extends SpriteComponent
   void update(double dt) {
     super.update(dt);
     velocity.x = game.objectSpeed;
+    if (position.x < -size.x) removeFromParent();
     position += velocity * dt;
     //position = position + velocity * dt;
   }

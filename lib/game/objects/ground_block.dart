@@ -6,6 +6,8 @@ class GroundBlock extends SpriteComponent
   final Vector2 gridPosition;
   final double xOffset;
 
+  final Vector2 velocity = Vector2.zero();
+
   GroundBlock({
     required this.gridPosition,
     required this.xOffset,
@@ -24,5 +26,13 @@ class GroundBlock extends SpriteComponent
       xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    velocity.x = game.objectSpeed;
+    if (position.x < -size.x) removeFromParent();
+    position += velocity * dt;
   }
 }

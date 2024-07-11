@@ -7,6 +7,8 @@ class WaterEnemy extends SpriteAnimationComponent
   final Vector2 gridPosition;
   double xOffset;
 
+  final Vector2 velocity = Vector2.zero();
+
   WaterEnemy({
     required this.gridPosition,
     required this.xOffset,
@@ -44,5 +46,12 @@ class WaterEnemy extends SpriteAnimationComponent
     );
   }
 
+  @override
+  void update(double dt) {
+    super.update(dt);
+    velocity.x = game.objectSpeed;
+    if (position.x < -size.x) removeFromParent();
+    position += velocity * dt;
+  }
 
 }

@@ -28,6 +28,23 @@ class EmberPlayer extends SpriteAnimationComponent
   void update(double dt) {
     super.update(dt);
     velocity.x = horizontalDirection * moveSpeed;
+
+    game.objectSpeed = 0;
+
+    //Emberが画面の左端から消えないように
+    if (position.x - size.x / 2 <= 0 && horizontalDirection < 0) {
+      velocity.x = 0;
+    }
+
+    /*
+    * 1. Emberが画面の半分を越したら世界が動く
+    * 2. 世界が動いたらEmberは画面上は止まる
+    * */
+    if (horizontalDirection > 0 && position.x + size.x / 2 > game.size.x / 2) {
+      velocity.x = 0;
+      game.objectSpeed = -moveSpeed;
+    }
+
     position += velocity * dt;
 
     if (horizontalDirection < 0 && scale.x > 0) {
