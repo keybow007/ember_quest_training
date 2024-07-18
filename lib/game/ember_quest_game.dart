@@ -15,6 +15,9 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents {
   late EmberPlayer _emberPlayer;
   double objectSpeed = 0.0;
 
+  double lastBlockXPosition = 0.0;
+  late UniqueKey lastBlockKey;
+
   @override
   Color backgroundColor() {
     return Color.fromARGB(255, 173, 223, 247);
