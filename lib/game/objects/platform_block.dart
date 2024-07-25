@@ -1,4 +1,5 @@
 import 'package:ember_quest/game/ember_quest_game.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class PlatformBlock extends SpriteComponent
@@ -26,6 +27,8 @@ class PlatformBlock extends SpriteComponent
       xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
+
+    add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 
   @override

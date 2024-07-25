@@ -1,10 +1,13 @@
 import 'package:ember_quest/game/ember_quest_game.dart';
+import 'package:ember_quest/game/objects/ground_block.dart';
+import 'package:ember_quest/game/objects/platform_block.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
-    with HasGameReference<EmberQuestGame>, KeyboardHandler {
+    with HasGameReference<EmberQuestGame>, KeyboardHandler, CollisionCallbacks {
   EmberPlayer({required super.position})
       : super(size: Vector2.all(64.0), anchor: Anchor.center);
 
@@ -22,6 +25,7 @@ class EmberPlayer extends SpriteAnimationComponent
         textureSize: Vector2.all(16.0),
       ),
     );
+    add(CircleHitbox());
   }
 
   @override
@@ -66,5 +70,15 @@ class EmberPlayer extends SpriteAnimationComponent
       horizontalDirection += 1;
     }
     return true;
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is PlatformBlock) {
+      print("[onCollision] $intersectionPoints / $other");
+    }
+
+    // TODO: implement onCollision
+    super.onCollision(intersectionPoints, other);
   }
 }

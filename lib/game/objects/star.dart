@@ -1,4 +1,5 @@
 import 'package:ember_quest/game/ember_quest_game.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class Star extends SpriteComponent with HasGameReference<EmberQuestGame> {
       xOffset + size.x * gridPosition.x + (size.x / 2),
       game.size.y - size.y * gridPosition.y - (size.y / 2),
     );
-
+    add(RectangleHitbox(collisionType: CollisionType.passive));
     add(
       SizeEffect.by(
         Vector2(-24, -24),

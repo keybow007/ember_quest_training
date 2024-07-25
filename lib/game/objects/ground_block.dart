@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ember_quest/game/ember_quest_game.dart';
 import 'package:ember_quest/game/managers/segment_manager.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/foundation.dart';
 
@@ -33,9 +34,12 @@ class GroundBlock extends SpriteComponent
       game.size.y - size.y * gridPosition.y,
     );
 
+    add(RectangleHitbox(collisionType: CollisionType.passive));
+
     if (gridPosition.x == 9 && position.x > game.lastBlockXPosition) {
       game.lastBlockKey = _blockKey;
       game.lastBlockXPosition = position.x + size.x;
+      print("[onLoad]lastBlockXPosition: ${game.lastBlockXPosition}");
     }
   }
 
@@ -46,8 +50,12 @@ class GroundBlock extends SpriteComponent
     if (position.x < -size.x) {
       removeFromParent();
       if (gridPosition.x == 0) {
+        int segmentIndex = Random().nextInt(segments.length);
+        print("セグメント$segmentIndex");
+        print("[loadGameSegments]lastBlockXPosition: ${game.lastBlockXPosition}");
         game.loadGameSegments(
-          Random().nextInt(segments.length),
+          segmentIndex,
+          //Random().nextInt(segments.length),
           game.lastBlockXPosition,
         );
       }

@@ -11,7 +11,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents {
+class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection {
   late EmberPlayer _emberPlayer;
   double objectSpeed = 0.0;
 

@@ -1,4 +1,5 @@
 import 'package:ember_quest/game/ember_quest_game.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
@@ -33,7 +34,7 @@ class WaterEnemy extends SpriteAnimationComponent
       xOffset + size.x * gridPosition.x,
       game.size.y - size.y * gridPosition.y,
     );
-
+    add(RectangleHitbox(collisionType: CollisionType.passive));
     add(
       MoveEffect.by(
         Vector2(-2 * size.x, 0),
