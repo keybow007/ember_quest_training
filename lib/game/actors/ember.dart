@@ -15,6 +15,9 @@ class EmberPlayer extends SpriteAnimationComponent
   final double moveSpeed = 200;
   final Vector2 velocity = Vector2.zero();
 
+  final Vector2 fromAbove = Vector2(0, -1);
+  bool isOnGround = false;
+
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
@@ -74,8 +77,21 @@ class EmberPlayer extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is PlatformBlock) {
-      print("[onCollision] $intersectionPoints / $other");
+    if (other is PlatformBlock || other is GroundBlock) {
+      if (intersectionPoints.length == 2) {
+        final mid = (intersectionPoints.elementAt(0) +
+                intersectionPoints.elementAt(1)) /
+            2;
+        final collisionNormal = absoluteCenter - mid;
+        final separationDistance = (size.x / 2) - collisionNormal.length;
+        collisionNormal.normalize();
+
+        if (fromAbove.dot(collisionNormal) > 0.9) {
+          this.isOnGround = true;
+        }
+
+        position += collisionNormal.scaled(separationDistance);
+      }
     }
 
     // TODO: implement onCollision
