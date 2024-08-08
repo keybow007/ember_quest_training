@@ -51,7 +51,7 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
     }
 
     _emberPlayer = EmberPlayer(
-      position: Vector2(128, canvasSize.y - 96),
+      position: Vector2(128, canvasSize.y - 128),
     );
     world.add(_emberPlayer);
   }

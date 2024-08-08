@@ -18,6 +18,12 @@ class EmberPlayer extends SpriteAnimationComponent
   final Vector2 fromAbove = Vector2(0, -1);
   bool isOnGround = false;
 
+  final double gravity = 15;
+  final double jumpSpeed = 600;
+  final double terminalVelocity = 150;
+
+  bool hasJumped = false;
+
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
@@ -33,7 +39,7 @@ class EmberPlayer extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    super.update(dt);
+    //super.update(dt);
     velocity.x = horizontalDirection * moveSpeed;
 
     game.objectSpeed = 0;
@@ -52,13 +58,27 @@ class EmberPlayer extends SpriteAnimationComponent
       game.objectSpeed = -moveSpeed;
     }
 
+    velocity.y += gravity;
+
+    if (hasJumped) {
+      if (this.isOnGround) {
+        velocity.y = -jumpSpeed;
+        this.isOnGround = false;
+      }
+      hasJumped = false;
+    }
+
+    velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
+
     position += velocity * dt;
+    print("[Ember]velocity.y: ${velocity.y} / position: $position / isOnGround: $isOnGround");
 
     if (horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
     } else if (horizontalDirection > 0 && scale.x < 0) {
       flipHorizontally();
     }
+    super.update(dt);
   }
 
   @override
@@ -72,6 +92,8 @@ class EmberPlayer extends SpriteAnimationComponent
         keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
       horizontalDirection += 1;
     }
+
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
     return true;
   }
 
@@ -94,7 +116,6 @@ class EmberPlayer extends SpriteAnimationComponent
       }
     }
 
-    // TODO: implement onCollision
     super.onCollision(intersectionPoints, other);
   }
 }
