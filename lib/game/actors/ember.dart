@@ -1,10 +1,14 @@
+import 'package:ember_quest/game/actors/water_enemy.dart';
 import 'package:ember_quest/game/ember_quest_game.dart';
 import 'package:ember_quest/game/objects/ground_block.dart';
 import 'package:ember_quest/game/objects/platform_block.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../objects/star.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
     with HasGameReference<EmberQuestGame>, KeyboardHandler, CollisionCallbacks {
@@ -23,6 +27,8 @@ class EmberPlayer extends SpriteAnimationComponent
   final double terminalVelocity = 150;
 
   bool hasJumped = false;
+
+  bool hitByEnemy = false;
 
   @override
   void onLoad() {
@@ -71,7 +77,7 @@ class EmberPlayer extends SpriteAnimationComponent
     velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
 
     position += velocity * dt;
-    print("[Ember]velocity.y: ${velocity.y} / position: $position / isOnGround: $isOnGround");
+    //print("[Ember]velocity.y: ${velocity.y} / position: $position / isOnGround: $isOnGround");
 
     if (horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
@@ -116,6 +122,31 @@ class EmberPlayer extends SpriteAnimationComponent
       }
     }
 
+    if (other is Star) {
+      other.removeFromParent();
+    }
+
+    if (other is WaterEnemy) {
+      hit();
+    }
+
     super.onCollision(intersectionPoints, other);
+  }
+
+  void hit() {
+    if (!hitByEnemy) {
+      hitByEnemy = true;
+    }
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+        ),
+      )..onComplete = () {
+        hitByEnemy = false;
+      },
+    );
   }
 }
