@@ -6,6 +6,7 @@ import 'package:ember_quest/game/managers/segment_manager.dart';
 import 'package:ember_quest/game/objects/ground_block.dart';
 import 'package:ember_quest/game/objects/platform_block.dart';
 import 'package:ember_quest/game/objects/star.dart';
+import 'package:ember_quest/overlays/hub.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -17,6 +18,9 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
 
   double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
+
+  int starsCollected = 0;
+  int health = 3;
 
   @override
   Color backgroundColor() {
@@ -54,6 +58,8 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
       position: Vector2(128, canvasSize.y - 128),
     );
     world.add(_emberPlayer);
+    camera.viewport.add(Hub());
+    //world.add(Hub());
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {

@@ -135,6 +135,7 @@ class EmberPlayer extends SpriteAnimationComponent
 
   void hit() {
     if (!hitByEnemy) {
+      game.health--;
       hitByEnemy = true;
     }
     add(
