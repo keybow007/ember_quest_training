@@ -11,7 +11,16 @@ class GameOver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO
-    return const Placeholder();
+    //https://docs.flame-engine.org/latest/tutorials/platformer/step_7.html#game-over-menu
+    return Center(
+      child: Container(
+        color: Colors.white,
+        width: 300.0,
+        height: 150.0,
+        child: Center(
+          child: Text("Game Over"),
+        ),
+      ),
+    );
   }
 }

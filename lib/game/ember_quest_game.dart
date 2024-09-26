@@ -12,7 +12,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCollisionDetection {
+class EmberQuestGame extends FlameGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   late EmberPlayer _emberPlayer;
   double objectSpeed = 0.0;
 
@@ -29,7 +30,7 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
 
   @override
   Future<void> onLoad() async {
-    debugMode = true;
+    //debugMode = true;
 
     await images.loadAll([
       "block.png",
@@ -43,10 +44,10 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
 
     //画面の原点座標を左上に設定
     camera.viewfinder.anchor = Anchor.topLeft;
-    initializeGame();
+    initializeGame(true);
   }
 
-  void initializeGame() {
+  void initializeGame(bool isLoadHub) {
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
 
@@ -58,8 +59,16 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
       position: Vector2(128, canvasSize.y - 128),
     );
     world.add(_emberPlayer);
-    camera.viewport.add(Hub());
-    //world.add(Hub());
+    if (isLoadHub) {
+      camera.viewport.add(Hub());
+      //world.add(Hub());
+    }
+  }
+
+  void reset() {
+    starsCollected = 0;
+    health = 3;
+    initializeGame(false);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
@@ -101,5 +110,13 @@ class EmberQuestGame extends FlameGame with HasKeyboardHandlerComponents, HasCol
           break;
       }
     }
+  }
+
+  @override
+  void update(double dt) {
+    if (health <= 0) {
+      overlays.add("GameOver");
+    }
+    super.update(dt);
   }
 }

@@ -47,7 +47,7 @@ class Star extends SpriteComponent with HasGameReference<EmberQuestGame> {
     super.update(dt);
 
     velocity.x = game.objectSpeed;
-    if (position.x < -size.x) removeFromParent();
+    if (position.x < -size.x || game.health <= 0) removeFromParent();
     position += velocity * dt;
   }
 }

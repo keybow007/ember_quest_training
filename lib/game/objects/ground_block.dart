@@ -68,5 +68,10 @@ class GroundBlock extends SpriteComponent
         game.lastBlockXPosition = position.x + size.x - 10;
       }
     }
+
+    if (game.health <= 0) {
+      removeFromParent();
+    }
+
   }
 }
